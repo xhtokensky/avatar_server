@@ -53,5 +53,6 @@ module.exports = {
     TOKENSKY_USER_TOKEN: 'tokensky_user_token',
     TOKENSKY_JIGUANG_IM_USER_REGISTER: 'tokensky_jiguang_im_user_register',
     TOKENSKY_USER_BALANCE_HASH: 'tokensky_user_balance_hash',
-    TOKENSKY_USER_INVITE: 'tokensky_user_invite'
+    TOKENSKY_USER_INVITE: 'tokensky_user_invite',
+    TOKENSKY_USER_APPEAL_RECORD: 'tokensky_user_appeal_record',//用户申诉表
 };

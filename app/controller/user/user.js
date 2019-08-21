@@ -871,7 +871,59 @@ module.exports = class extends Controller {
         }
     }
 
+    /// 用户申述(客服工单)
+    async userAppeal(){
+        let {ctx} = this;
+        let response = Response();
+        try {
+            let json = await this.ctx.checkToken();
+            let userId = json.uid;
+            let user = await this.ctx.service.tokensky.userService.findOneUser(userId);
+            if (!user) {
+                response.errMsg(this.ctx.I18nMsg(I18nConst.UserDoesNotExist), code.ERROR_USER_NOTFOUND, 'ERROR_USER_NOTFOUND');
+                return this.ctx.body = response;
+            }
+            let body = this.ctx.request.body;
+            let casueData = body.casueStr;
+            let proofImg = body.proofImgStr;
+            console.log('==userAppeal==>body =', body,userId);
 
+            if (!!proofImg && !!casueData) {
+                let resBool = await this.ctx.service.c2c.userService.addUserAppeal(userId, casueData, proofImg);
+                if(resBool == false || resBool == null){
+                    response.errMsg('内容出错啦', code.ERROR_ADD_DATA, 'ERROR_ADD_DATA');
+                    return this.ctx.body = response;
+                }
+                return this.ctx.body = response;
+            } else {
+                response.errMsg('内容出错啦', code.ERROR_PARAMS, 'ERROR_PARAMS');
+                return this.ctx.body = response;
+            }
+
+        } catch (e) {
+            console.error(`userAppeal error:`, e.message);
+            ctx.logger.error(`userAppeal error:`, e.message);
+            response.errMsg(this.ctx.I18nMsg(I18nConst.SystemError) + e.message, code.ERROR_SYSTEM, 'ERROR_SYSTEM');
+            return this.ctx.body = response;
+        } 
+    }
+
+    /// 绑定矿池用户数据
+    async bindOrepoolUser(){
+        let {ctx} = this;
+        let response = Response();
+        try{
+            let userId = this.ctx.query.userId;       /// 比特分配的id
+            let phoneNum = this.ctx.query.phoneNum;   /// 注册时填写的手机号
+
+        }catch(err){
+            //console.error(`bindOrepoolUser error:`, err.message);
+            ctx.logger.error(`bindOrepoolUser error:`, err.message);
+            response.errMsg(this.ctx.I18nMsg(I18nConst.SystemError) + err.message, code.ERROR_SYSTEM, 'ERROR_SYSTEM');
+            return this.ctx.body = response;
+        }
+    }
+    
     async test() {
         /* let url = 'http://ptnj9tzkn.bkt.clouddn.com/3.jpeg';
          let aliyun = require('./../../utils/aliyun');

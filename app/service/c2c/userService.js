@@ -358,6 +358,18 @@ class UserService extends Service {
         }
     }
 
+    async addUserAppeal(userId, casueData, proofImg) {
+        let result = await this.app.mysql.get(dbName).insert(table.TOKENSKY_USER_APPEAL_RECORD, {
+            user_id: userId,
+            casue_content: casueData,
+            proof_img: proofImg,
+            create_time: dateUtil.currentTimestamp()
+        });
+        if (result.affectedRows < 1) {
+            return false;
+        }
+        return true
+    }
 
 }
 

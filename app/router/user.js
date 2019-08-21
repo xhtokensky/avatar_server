@@ -51,7 +51,12 @@ module.exports = app => {
 
     router.get('/avatar/test',controller.user.user.test);
 
+    /// 用户申述
+    router.post('/avatar/userAppeal',controller.user.user.userAppeal);
 
+    
+    /// 与矿池用户进行绑定
+    router.post('/avatar/bindOrepoolUser',controller.user.user.bindOrepoolUser);
 
 };
 
